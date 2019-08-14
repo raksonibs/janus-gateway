@@ -11,13 +11,9 @@
 #    tar xfv data.tar.xv
 #    cp usr/lib/i386-linux-gnu/gstreamer-0.10/libgstopus.so /usr/lib/i386-linux-gnu/gstreamer-0.10/
 
-gst-launch \
-	audiotestsrc ! \
-		audioresample ! audio/x-raw-int,channels=1,rate=16000 ! \
-		opusenc bitrate=20000 ! \
-			rtpopuspay ! udpsink host=127.0.0.1 port=5002 \
+gst-launch-1.0 \
 	videotestsrc ! \
 		video/x-raw-rgb,width=320,height=240,framerate=15/1 ! \
-		videoscale ! videorate ! ffmpegcolorspace ! timeoverlay ! \
-		vp8enc bitrate=256000 speed=2 max-latency=1 error-resilient=true ! \
+		videoscale ! videorate ! videoconvert ! timeoverlay ! \
+		vp8enc error-resilient=1 ! \
 			rtpvp8pay ! udpsink host=127.0.0.1 port=5004

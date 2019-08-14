@@ -213,9 +213,7 @@ While most of the above instructions will work when compiling Janus on MacOS as 
 
 First of all, you can use `brew` to install most of the dependencies:
 
-	brew install jansson libnice openssl srtp libusrsctp libmicrohttpd \
-		libwebsockets cmake rabbitmq-c sofia-sip opus libogg curl glib \
-		libconfig pkg-config gengetopt autoconf automake libtool
+	brew install jansson libnice openssl libconfig srtp libusrsctp libmicrohttpd  libwebsockets cmake rabbitmq-c sofia-sip opus libogg curl gtk glib libconfig pkg-config gengetopt autoconf automake libtool
 
 For what concerns libwebsockets, though, make sure that the installed version is higher than `2.4.1`, or you might encounter the problems described in [this post](https://groups.google.com/forum/#!topic/meetecho-janus/HsFaEXBz4Cg). If `brew` doesn't provide a more recent version, you'll have to install the library manually.
 
@@ -224,6 +222,38 @@ Notice that you may need to provide a custom `prefix` and `PKG_CONFIG_PATH` when
 	./configure --prefix=/usr/local/janus PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig
 
 Everything else works exactly the same way as on Linux.
+
+### MAC installation instructions
+1. brew install jansson libnice openssl libconfig srtp libusrsctp libmicrohttpd  libwebsockets cmake rabbitmq-c sofia-sip opus libogg curl gtk glib libconfig pkg-config gengetopt autoconf automake libtool gtk-doc-tools
+1a.
+```
+git clone https://gitlab.freedesktop.org/libnice/libnice
+cd libnice
+./autogen.sh
+./configure --prefix=/usr
+make && sudo make install
+```
+1b.
+```
+wget https://github.com/cisco/libsrtp/archive/v2.2.0.tar.gz
+tar xfv v2.2.0.tar.gz
+cd libsrtp-2.2.0
+./configure --prefix=/usr --enable-openssl
+make shared_library && sudo make install
+```
+1c.
+```
+wget https://github.com/cisco/libsrtp/archive/v1.5.4.tar.gz
+tar xfv v1.5.4.tar.gz
+cd libsrtp-1.5.4
+./configure --prefix=/usr --enable-openssl
+make shared_library && sudo make install
+```
+2. sh autogen.sh
+3. ./configure --prefix=/opt/janus
+4. make
+5. make install
+6. janus
 
 ## Configure and start
 To start the server, you can use the `janus` executable. There are several things you can configure, either in a configuration file:
