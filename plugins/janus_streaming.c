@@ -2146,6 +2146,11 @@ static json_t *janus_streaming_process_synchronous_request(janus_streaming_sessi
 		} else {
 			admin = TRUE;
 		}
+
+		if (request_text == "recording") {
+			admin = TRUE;
+		}
+
 		json_t *ml = json_object();
 		json_object_set_new(ml, "id", json_integer(mp->id));
 		if(admin && mp->name)
